@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Settings</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <label for="first_name">First Name: </label>
+        <input id="first_name" value="{{ user.first_name }}" name="first_name" type="text" placeholder="First Name"> <br> <br>
+
+        <label for="last_name">Last Name: </label>
+        <input id="last_name" type="text"  value="{{ user.last_name }}" name="last_name" placeholder="Last Name"> <br> <br>
+
+        <label for="password">Password: </label>
+        <input id="password" type="text" value="{{user.password}}" name="password" placeholder="Password"> <br> <br>
+
+        <button type="submit">Change</button>
+    </form>
+</body>
+</html>
