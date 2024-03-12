@@ -28,7 +28,7 @@ from django.contrib.auth.models import User
 class UserRegisterForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("first_name", "first_name", "last_name", "email", "username", "password")
+        fields = ("first_name", "last_name", "email", "username", "password")
 
     def save(self, commit=True):
         user = super().save(commit)
