@@ -7,6 +7,8 @@ class Book(models.Model):
     price = models.FloatField(default=1)
     count = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)], default=1)
 
+    def __str__(self):
+        return f"{self.title}"
 
 class Customers(models.Model):
     ROLE = (
@@ -16,12 +18,18 @@ class Customers(models.Model):
     last_name = models.CharField(max_length=50)
     role = models.CharField(max_length=20, choices=ROLE, default="S")
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 
 class BookRecord(models.Model):
     customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    returned_date = models.DateField(null=True, blank=True)
-    create_date = models.DateTimeField(auto_created=True)
+    took_on = models.DateField()
+    returned_on = models.DateField(null=True, blank=True)
+    create_date = models.DateTimeField(auto_now=True)
 
+    def is_returned(self):
+        return self.returned_on is not None
 

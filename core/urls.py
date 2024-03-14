@@ -8,6 +8,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("users.urls")),
     path("", include("library.urls")),
-    path("", LandingPageView.as_view(), name="landing-page"),
+    path("", LandingPageView.as_view(), name="landing"),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

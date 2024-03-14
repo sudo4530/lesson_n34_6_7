@@ -1,50 +1,69 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import RegisterForm, LoginForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class HomePageView(View):
-    def get(self, request):
-        return render(request, "users/home.html")
 
 class UserLoginView(View):
     def get(self, request):
-        form = UserLoginForm()
+        form = LoginForm()
         context = {
             "form": form
         }
         return render(request, "users/login.html", context)
 
     def post(self, request):
+        username = request.POST["username"]
+        password = request.POST["password"]
+        data = {
+            "username": username,
+            "password": password
+        }
         login_form = AuthenticationForm(data=request.POST)
 
         if login_form.is_valid():
             user = login_form.get_user()
             login(request, user)
-            return redirect("users:home")
+
+            return redirect("landing")
         else:
+
             context = {
-                "form": login_form
+                "form": login_form,
             }
             return render(request, "users/login.html", context)
 
 
 class UserRegisterView(View):
     def get(self, request):
-        form = UserRegisterForm()
+        form = RegisterForm()
         context = {
             "form": form
         }
         return render(request, "users/register.html", context)
 
     def post(self, request):
-        create_form = UserRegisterForm(data=request.POST)
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password_1 = request.POST["password_1"]
+        # password_2 = request.POST["password_2"]
+        data = {
+            "first_name": first_name,
+            "last_name": last_name,
+            "username": username,
+            "email": email,
+            "password": password_1
+        }
+        create_form = RegisterForm(data=data)
         if create_form.is_valid():
             create_form.save()
-            return redirect("users:login")
+            return redirect("login")
         else:
             print("Error")
             context = {
@@ -52,8 +71,13 @@ class UserRegisterView(View):
             }
             return render(request, "users/register.html", context)
 
+class LogOutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect("landing")
 
-class UserListView(View):
+
+class UserListView(LoginRequiredMixin, View):
     def get(self, request):
         search = request.GET.get("search")
         if not search:
@@ -97,6 +121,3 @@ class UserSettingsView(View):
         user.save()
         return HttpResponse("<h1>Successfull</h1>")
 
-class ProfileView(View):
-    def get(self, request):
-        return render(request, "users/profile.html", {"user": request.user})

@@ -18,11 +18,8 @@ class CustomerAdmin(ImportExportModelAdmin):
 
 @admin.register(BookRecord)
 class BookRecordAdmin(ImportExportModelAdmin):
-    list_display = ["id", "customer", 'book', 'returned_date', "create_date"]
-    # autocomplete_fields = ["book"]
-    search_fields = ["customer", "book"]
-    # filter = ["customer"]
-
-
-
+    list_display = ("id", "customer", 'book', 'is_returned', "create_date")
+    # list_display_links = ["id", "customer", "book", "took_on", "create_date"]
+    autocomplete_fields = ("book",)
+    search_fields = ("customer", "book")
 
