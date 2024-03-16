@@ -71,12 +71,6 @@ class UserRegisterView(View):
             }
             return render(request, "users/register.html", context)
 
-class LogOutView(View):
-    def get(self, request):
-        logout(request)
-        return redirect("landing")
-
-
 class UserListView(LoginRequiredMixin, View):
     def get(self, request):
         search = request.GET.get("search")
@@ -97,6 +91,12 @@ class UserListView(LoginRequiredMixin, View):
 
     def post(self):
         pass
+
+
+class LogOut(View):
+    def get(self, request):
+        logout(request)
+        return redirect("landing")
 
 
 class UserDetailView(View):
