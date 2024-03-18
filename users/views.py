@@ -104,6 +104,13 @@ class UserDetailView(View):
         user = User.objects.get(id=id)
         return render(request, "users/user_detail.html", context={"user": user})
 
+
+class UserDeleteView(View):
+    def get(self, request, id):
+        user = User.objects.get(id=id)
+        user.delete()
+        return redirect("users")
+
 class UserSettingsView(View):
     def get(self, request, id):
         user = User.objects.get(id=id)

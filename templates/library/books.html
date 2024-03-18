@@ -12,7 +12,7 @@
         <button type="submit">Search</button>
 
     </form>  <br>
-    <a href="{% url 'add-book' %}"><button>Add New Book</button></a>
+    <a href="{% url 'add-book' %}"><button type="button">Add New Book</button></a>
 
     {% for book in books %}
         <div class="card" style="width: 18rem;">
@@ -28,8 +28,8 @@
             <li class="list-group-item">Count: {{ book.count }}</li>
           </ul>
           <div class="card-body">
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+            <a href="{% url 'settings-book' book.id %}" class="card-link">Settings</a>
+            <a href="{% url 'book-delete' book.id %}" class="card-link">Delete</a>
           </div>
         </div>
     {% endfor %}

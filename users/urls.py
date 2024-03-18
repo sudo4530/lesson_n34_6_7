@@ -1,7 +1,6 @@
 from django.urls import path
-from .views import UserLoginView, UserRegisterView, UserListView, UserDetailView, UserSettingsView, LogOut
+from .views import UserLoginView, UserRegisterView, UserListView, UserDetailView, UserSettingsView, LogOut, UserDeleteView
 
-# app_name = "users"
 urlpatterns = [
     # auth
     path("login/", UserLoginView.as_view(), name="login"),
@@ -10,4 +9,5 @@ urlpatterns = [
     path("users/", UserListView.as_view(), name="users"),
     path("users/<int:id>/", UserDetailView.as_view(), name="users-detail"),
     path("settings/<int:id>/", UserSettingsView.as_view(), name="settings"),
+    path("delete_user/<int:id>/", UserDeleteView.as_view(), name="delete_user"),
 ]

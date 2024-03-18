@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     # apps
     'users',
     'library',
+    "course",
 
 ]
 
